@@ -1,0 +1,63 @@
+
+=== Simulation de l'agent (Google et WhatsApp simulés) ===
+
+[lun. 11:00] Cycle 1 : lecture des avis des 2 fiches
+   4 nouveaux avis, 4 réponses envoyées pour validation (l'avis d'août déjà répondu est ignoré)
+   📤 → 33612345678 : Bonjour Marco 👋 / Nouvel avis Google de Gros Mangeur (★☆☆☆☆) :…
+   📤 → 33600000001 : 🚨 Chez Marco — avis sensible (1★, code DCMN) : Avis insultant : la réponse reste calme. Prévenir le patron ; l'avis peut être signalé à Goo…
+   📤 → 33612345678 : Bonjour Marco 👋 / Nouvel avis Google de Sophie (★★☆☆☆) :…
+   📤 → 33612345678 : Bonjour Marco 👋 / Nouvel avis Google de Thomas Martin (★★★★★) :…
+   📤 → 33711223344 : Bonjour Yanis 👋 / Nouvel avis Google de Hugo (★★★★☆) :…
+
+[11:20] Marco appuie sur « Publier » pour l'avis de Thomas
+   → avis de Thomas : Bonjour Thomas, ravis que nos pâtes à la truffe vous aient plu ! Merci pour ce joli… (publié ✅)
+   📤 → 33612345678 : ✅ Publiée sur Google. Merci !…
+
+[11:25] Marco répond « Enlève la dernière phrase » sur l'avis de Sophie
+   📤 → 33612345678 : ✏️ Voici la version modifiée : / …
+[11:27] Marco : « ok parfait »
+   → publié : Bonjour Sophie, nous sommes navrés que votre repas n'ait pas été à la hauteur. 45 minutes d'attente, c'est beaucoup trop, vous avez raison. Et des plats servis tièdes, ce n'est pas acceptable. Votre retour est partagé avec toute l'équipe. / Marco et toute l'équipe
+   📤 → 33612345678 : ✅ Publiée sur Google. Merci !…
+
+[11:30] Marco, sur l'avis insultant : « non je préfère pas répondre à ça »
+   → état : rejete (rien n'est publié)
+   📤 → 33612345678 : Compris, je ne publie rien sur cet avis.…
+   📤 → 33600000001 : ℹ️ Chez Marco : le patron a refusé la réponse (réf. DCMN).…
+
+[mar. 11:00] +24 h : Yanis (Big Smash) n'a pas répondu → rappel
+   📤 → 33711223344 : 🔔 Petit rappel : une réponse attend ton « OK » (réf. CTSJ, avis 4★ de Hugo).…
+[mer. 11:00] +48 h : validation tacite activée pour Big Smash (avis 4★ sans alerte) → publication
+   → avis de Hugo : publie (tacite)
+   📤 → 33711223344 : ✅ Publiée sur Google. Merci !…
+
+[mer. 15:00] Nouvel avis ; Marco y répond lui-même sur Google avant de valider
+   → état : deja_repondu : la réponse de Marco n'est pas écrasée
+   📤 → 33612345678 : Bonjour Marco 👋 / Nouvel avis Google de Claire (★★★★☆) :…
+   📤 → 33600000001 : ℹ️ Chez Marco (réf. HERH) : une réponse existe déjà sur Google, je n'ai rien publié.…
+
+[jeu. 10:00] Google renvoie une erreur 503 pendant une publication → nouvel essai au cycle suivant
+   → après l'erreur : approuve (tentatives : 1)
+   → cycle suivant : publie
+
+[1er nov.] Bilan d'octobre pour Chez Marco
+   📊 Bilan d'octobre 2026 · Chez Marco
+   • 4 avis · note moyenne 3,0/5
+   • Répartition : 5★ ×1 · 4★ ×1 · 2★ ×1 · 1★ ×1
+   • Ce qui revient dans les critiques : l'attente (1), des plats froids ou tièdes (1)
+   • Ce que les clients adorent : la cuisine (2), le cadre (1), pâtes (2), vin (1)
+   • Réponses publiées : 3/4 · 1 en attente
+   • 1 avis sensible signalé ce mois-ci
+   • Délai de réponse médian : 2 h
+   — Karim, Réponse Maison
+   → page imprimable : agent/out/bilan-exemple-chez-marco-2026-10.html
+
+État final des avis :
+   Gros Mangeur   1★  rejete
+   Sophie         2★  publie
+   Thomas Martin  5★  publie
+   Hugo           4★  publie
+   Claire         4★  deja_repondu
+   Inès           5★  publie
+
+Fin de la simulation ✔
+

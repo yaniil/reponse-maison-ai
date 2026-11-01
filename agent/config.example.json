@@ -1,0 +1,44 @@
+{
+  "operator": { "prenom": "Karim", "whatsapp": "+33600000000", "marque": "Réponse Maison" },
+
+  "backfillDays": 3,
+  "reminderHours": 24,
+  "maxPublishAttempts": 5,
+  "statePath": "agent/data/state.json",
+
+  "ai": { "provider": "anthropic", "model": "claude-sonnet-5-5", "apiKey": "env:ANTHROPIC_API_KEY" },
+
+  "google": {
+    "clientId": "env:GOOGLE_CLIENT_ID",
+    "clientSecret": "env:GOOGLE_CLIENT_SECRET",
+    "refreshToken": "env:GOOGLE_REFRESH_TOKEN"
+  },
+
+  "whatsapp": {
+    "phoneNumberId": "env:WHATSAPP_PHONE_NUMBER_ID",
+    "token": "env:WHATSAPP_TOKEN",
+    "verifyToken": "env:WHATSAPP_VERIFY_TOKEN",
+    "templateName": "validation_avis",
+    "language": "fr",
+    "apiVersion": "v21.0"
+  },
+
+  "restaurants": [
+    {
+      "id": "chez-marco",
+      "location": "accounts/123456789/locations/987654321",
+      "owner": { "prenom": "Marco", "whatsapp": "06 12 34 56 78", "tutoiement": false },
+      "autoApprovePositiveAfterHours": null,
+      "profile": {
+        "nom": "Chez Marco",
+        "cuisine": "italienne",
+        "ton": "chaleureux",
+        "tutoiement": false,
+        "signature": "Marco et toute l'équipe",
+        "aEviter": "les travaux de la rue",
+        "contact": "01 42 00 00 00",
+        "infos": "Pâtes fraîches maison, terrasse, ouvert 7j/7"
+      }
+    }
+  ]
+}
