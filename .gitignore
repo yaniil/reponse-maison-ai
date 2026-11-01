@@ -1,0 +1,5 @@
+node_modules/
+agent/state*.json
+agent/config.json
+.env
+*.log
