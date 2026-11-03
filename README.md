@@ -1,45 +1,51 @@
-# AvisPro — réponses aux avis Google des restaurants
+# Réponse Maison : agent IA de réponse aux avis Google
 
-Outil semi-manuel (Phase 1), écran démo pour le porte-à-porte (Phase 2) et agent d'automatisation (Phase 3),
-construits sur **un seul cœur** : l'appli et l'agent rédigent avec exactement les mêmes règles.
+Rédige des réponses personnalisées aux avis Google des restaurants, avec **validation humaine par WhatsApp** avant publication.
+Projet conçu et lancé en 2026, testé auprès de restaurants indépendants.
+
+**[▶ Essayer la démo en ligne](https://yaniil.github.io/reponse-maison-ai/dist/avispro.html)**
+Sans clé API, l'appli utilise son moteur hors-ligne. Avec une clé Anthropic (Réglages), elle rédige avec Claude.
+
+## Ce que fait le projet
+
+1. **Analyse l'avis** : langue, note, sentiment, plats et prénoms cités, insultes, faux avis probables, santé/hygiène.
+2. **Rédige la réponse** avec un LLM (Claude), dans le ton du restaurant, sans rien inventer.
+3. **Contrôle la réponse** : pas de geste commercial non validé, pas de sujet interdit, pas de prénom d'employé dans un avis négatif.
+4. **Fait valider le patron** par WhatsApp, puis publie (agent connecté à l'API Google Business Profile).
+
+## Points techniques
+
+- **LLM & prompt engineering** : prompt système de 15 règles généré depuis la fiche du restaurant, enrichi de repères extraits de l'avis.
+- **Sortie structurée** : réponse + ligne `ALERTE` lue par le code pour signaler les avis à risque.
+- **Garde-fous** : contrôles par règles après génération et retouches automatiques des formules creuses.
+- **Résilience** : streaming, délai de 9 s, bascule automatique vers un moteur sans IA (règles + gabarits, anti-répétition par similarité de trigrammes).
+- **Human-in-the-loop** : rien n'est publié sans validation ; l'agent ne réécrit jamais une réponse déjà publiée par le patron.
+- **Évaluation** : 34 tests automatisés, banc d'essai de 23 avis × 4 variantes, 400 avis aléatoires de robustesse.
+
+## Architecture
 
 ```
-src/core/     le cœur : analyse de l'avis, moteur hors-ligne, prompt Claude, bascule automatique, WhatsApp, bilan
-src/web/      l'appli mobile une page (+ écran démo)          → construite dans dist/avispro.html
-agent/        l'agent Phase 3 (Google + WhatsApp, réels ou simulés)   → voir agent/README.md
-tests/        33 tests automatiques
-docs/         accès à l'API Google, résultats des tests, journal de simulation
+src/core/   cœur partagé : analyse, prompt, fournisseurs LLM, moteur hors-ligne, WhatsApp, bilan mensuel
+src/web/    appli mobile une page + écran de démo   → dist/avispro.html
+agent/      agent d'automatisation (API Google Business Profile + WhatsApp Cloud, réels ou simulés)
+tests/      tests automatisés
+docs/       accès à l'API Google, résultats des tests
 ```
 
-## Utiliser l'appli
-
-- **Dans claude.ai** (recommandé) : ouvre l'artefact « AvisPro ». Claude rédige via ton compte (aucune clé),
-  fiches et historique sont synchronisés entre ton téléphone et ton ordinateur.
-- **Hors claude.ai** (secours, ou pour un collègue) : `dist/avispro.html` est un fichier unique.
-  1. Va sur app.netlify.com/drop et dépose le fichier → tu obtiens une adresse web.
-  2. Ouvre-la sur ton téléphone → menu du navigateur → « Ajouter à l'écran d'accueil ».
-  3. Réglages → « Claude, avec une clé API » → colle ta clé (console.anthropic.com). Sans clé, le moteur hors-ligne répond.
-  Les données restent alors sur le téléphone : exporte une sauvegarde de temps en temps (Réglages → Données).
-
-## Développer
+## Lancer en local
 
 ```bash
-npm install          # esbuild (construction de l'appli)
-npm run build        # → dist/avispro.html et dist/avispro-artifact.html
-npm test             # cœur IA, agent, robustesse (400 avis aléatoires)
-npm run bench        # → docs/RESULTATS_TESTS_DEMO.md (23 avis × 4 variantes à relire)
-npm run simulate     # la boucle de l'agent racontée pas à pas
+npm install
+npm test           # tests
+npm run build      # construit dist/avispro.html
+npm run simulate   # boucle complète de l'agent sur un Google et un WhatsApp simulés
 ```
 
-Node 18 ou plus. Le cœur et l'agent n'ont aucune dépendance.
+Node.js 18+. Le cœur et l'agent n'ont aucune dépendance.
 
-## Choix techniques
+## Stack
 
-- **Un seul cœur** pour l'appli et l'agent : une règle corrigée une fois l'est partout.
-- **Jamais de plantage** : si Claude ne répond pas (réseau, clé, délai de 9 s), le moteur hors-ligne prend le relais
-  et l'interface le signale discrètement.
-- **Moteur hors-ligne** : analyse l'avis (langue, note, sujets, plats, prénoms, durées, occasion, insultes, faux avis,
-  santé/hygiène) puis assemble une réponse à partir de formules variées, sans répéter celles des réponses récentes.
-- **Aucune invention** : seuls les éléments de l'avis et de la fiche peuvent être cités ; contrôle automatique
-  des gestes commerciaux, des sujets à éviter et des prénoms d'employés dans les avis négatifs.
-- **Santé / hygiène** : empathie, aucune excuse qui vaudrait aveu, alerte rouge pour le patron.
+JavaScript (Node.js), API Claude (Anthropic), API Google Business Profile, WhatsApp Cloud API, esbuild, Playwright.
+
+---
+Projet réalisé par **Yani Zekhnine** avec l'assistance de Claude (Anthropic).
